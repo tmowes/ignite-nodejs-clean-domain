@@ -1,0 +1,25 @@
+{
+  "name": "ignite-nodejs-clean-domain",
+  "version": "1.0.0",
+  "description": "Domain Driven Design",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.7"
+  },
+  "devDependencies": {
+    "@piktew/eslint-config-node": "^1.0.0",
+    "@types/node": "^18.16.3",
+    "eslint": "^8.39.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.4",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.30.1"
+  }
+}
