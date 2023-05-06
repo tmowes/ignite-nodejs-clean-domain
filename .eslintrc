@@ -1,8 +1,17 @@
 {
   "extends": [
-    "@piktew/eslint-config-node"
+    "@piktew/eslint-config-node",
+    "plugin:vitest-globals/recommended"
   ],
   "rules": {
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": "off",
+    "sonarjs/no-duplicate-string": [
+      "error",
+      6
+    ]
+  },
+  "env": {
+    "vitest-globals/env": true
   }
 }
