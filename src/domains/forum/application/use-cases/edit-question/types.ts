@@ -5,6 +5,7 @@ export type EditQuestionUseCaseRequest = {
   authorId: string
   title: string
   content: string
+  attachmentsIds: string[]
 }
 
 export type EditQuestionUseCaseResponse = {

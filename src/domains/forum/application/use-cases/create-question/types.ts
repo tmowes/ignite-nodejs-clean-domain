@@ -4,6 +4,7 @@ export type CreateQuestionUseCaseRequest = {
   authorId: string
   title: string
   content: string
+  attachmentsIds: string[]
 }
 
 export type CreateQuestionUseCaseResponse = {

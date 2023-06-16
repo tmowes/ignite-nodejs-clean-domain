@@ -1,15 +1,23 @@
 import { QuestionsRepository } from '@domains/forum/application/repositories/questions-repository'
+import { QuestionAttachmentList } from '@domains/forum/enterprise/entities/question-attachment-list'
+import { QuestionAttachment } from '@domains/forum/enterprise/entities/question-attachment'
+import { UniqueEntityID } from '@core/entities/unique-entity-id'
 
+import { QuestionAttachmentsRepository } from '../../repositories/question-attachments-repository'
 import { EditQuestionUseCaseRequest, EditQuestionUseCaseResponse } from './types'
 
 export class EditQuestionUseCase {
-  constructor(private questionsRepository: QuestionsRepository) {}
+  constructor(
+    private questionsRepository: QuestionsRepository,
+    private questionAttachmentsRepository: QuestionAttachmentsRepository,
+  ) {}
 
   async execute({
     questionId,
     authorId,
     content,
     title,
+    attachmentsIds,
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
     const question = await this.questionsRepository.findById(questionId)
 
@@ -21,7 +29,22 @@ export class EditQuestionUseCase {
       throw new Error('Not allowed')
     }
 
-    const updatedQuestion = Object.assign(question, { content, title })
+    const currentQuestionAttachments = await this.questionAttachmentsRepository.findManyByQuestionId(
+      questionId,
+    )
+
+    const attachments = new QuestionAttachmentList(currentQuestionAttachments)
+
+    const questionAttachments = attachmentsIds.map((attachmentId) =>
+      QuestionAttachment.create({
+        attachmentId: new UniqueEntityID(attachmentId),
+        questionId: question.id,
+      }),
+    )
+
+    attachments.update(questionAttachments)
+
+    const updatedQuestion = Object.assign(question, { content, title, attachments })
 
     await this.questionsRepository.save(updatedQuestion)
 
