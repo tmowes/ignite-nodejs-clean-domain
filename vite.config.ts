@@ -1,5 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({

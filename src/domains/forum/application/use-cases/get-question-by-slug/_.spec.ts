@@ -23,10 +23,6 @@ describe('Get Question By Slug', () => {
 
     const { value } = await sut.execute({ slug: 'example-question' })
 
-    expect(value).toMatchObject({
-      question: expect.objectContaining({
-        title: newQuestion.title,
-      }),
-    })
+    expect(value).toMatchObject({ question: expect.objectContaining({ title: newQuestion.title }) })
   })
 })
