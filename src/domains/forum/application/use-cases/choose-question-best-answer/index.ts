@@ -1,10 +1,13 @@
 import { AnswersRepository } from '@domains/forum/application/repositories/answers-repository'
 import { QuestionsRepository } from '@domains/forum/application/repositories/questions-repository'
+import { left, right } from '@core/entities/either'
 
 import {
   ChooseQuestionBestAnswerUseCaseRequest,
   ChooseQuestionBestAnswerUseCaseResponse,
 } from './types'
+import { ResourceNotFoundError } from '../errors/resource-not-found-error'
+import { NotAllowedError } from '../errors/not-allowed'
 
 export class ChooseQuestionBestAnswerUseCase {
   constructor(
@@ -19,23 +22,23 @@ export class ChooseQuestionBestAnswerUseCase {
     const answer = await this.answersRepository.findById(answerId)
 
     if (!answer) {
-      throw new Error('Answer not found')
+      return left(new ResourceNotFoundError())
     }
 
     const question = await this.questionsRepository.findById(answer.questionId.toString())
 
     if (!question) {
-      throw new Error('Question not found')
+      return left(new ResourceNotFoundError())
     }
 
     if (authorId !== question.authorId.toString()) {
-      throw new Error('Not allowed')
+      return left(new NotAllowedError())
     }
 
     const updatedQuestion = Object.assign(question, { bestAnswerId: answer.id })
 
     await this.questionsRepository.save(updatedQuestion)
 
-    return { question: updatedQuestion }
+    return right({ question: updatedQuestion })
   }
 }

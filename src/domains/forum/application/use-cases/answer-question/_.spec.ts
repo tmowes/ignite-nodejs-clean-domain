@@ -16,15 +16,15 @@ describe('Create Answer', () => {
   })
 
   it('should be able to create a answer', async () => {
-    const { answer } = await sut.execute({
+    const result = await sut.execute({
       questionId: '1',
       instructorId: '1',
       content: 'Example Content',
       attachmentsIds: ['1', '2'],
     })
 
-    expect(answer.id).toBeTruthy()
-    expect(inMemoryAnswersRepository.items[0].id).toEqual(answer.id)
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryAnswersRepository.items[0].id).toEqual(result.value?.answer.id)
     expect(inMemoryAnswersRepository.items[0].attachments.currentItems).toHaveLength(2)
     expect(inMemoryAnswersRepository.items[0].attachments.currentItems).toEqual([
       expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),

@@ -3,8 +3,11 @@ import { AnswerAttachmentsRepository } from '@domains/forum/application/reposito
 import { AnswerAttachmentList } from '@domains/forum/enterprise/entities/answer-attachment-list'
 import { AnswerAttachment } from '@domains/forum/enterprise/entities/answer-attachment'
 import { UniqueEntityID } from '@core/entities/unique-entity-id'
+import { left, right } from '@core/entities/either'
 
 import { EditAnswerUseCaseRequest, EditAnswerUseCaseResponse } from './types'
+import { NotAllowedError } from '../errors/not-allowed'
+import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 
 export class EditAnswerUseCase {
   constructor(
@@ -21,11 +24,11 @@ export class EditAnswerUseCase {
     const answer = await this.answersRepository.findById(answerId)
 
     if (!answer) {
-      throw new Error('Answer not found')
+      return left(new ResourceNotFoundError())
     }
 
     if (authorId !== answer.authorId.toString()) {
-      throw new Error('Not allowed')
+      return left(new NotAllowedError())
     }
 
     const currentAnswerAttachments = await this.answerAttachmentsRepository.findManyByAnswerId(answerId)
@@ -42,6 +45,6 @@ export class EditAnswerUseCase {
 
     await this.answersRepository.save(updatedAnswer)
 
-    return { answer: updatedAnswer }
+    return right({ answer: updatedAnswer })
   }
 }

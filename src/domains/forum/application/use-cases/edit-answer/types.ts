@@ -1,4 +1,8 @@
+import { Either } from '@core/entities/either'
 import { Answer } from '@domains/forum/enterprise/entities/answer'
+
+import { NotAllowedError } from '../errors/not-allowed'
+import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 
 export type EditAnswerUseCaseRequest = {
   answerId: string
@@ -7,6 +11,9 @@ export type EditAnswerUseCaseRequest = {
   attachmentsIds: string[]
 }
 
-export type EditAnswerUseCaseResponse = {
-  answer: Answer
-}
+export type EditAnswerUseCaseResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  {
+    answer: Answer
+  }
+>

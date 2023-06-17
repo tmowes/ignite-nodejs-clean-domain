@@ -25,9 +25,9 @@ describe('Fetch Question Answers', () => {
       inMemoryAnswersRepository.create(makeAnswer({ questionId })),
     ])
 
-    const { answers } = await sut.execute({ questionId: questionId.toString(), page: 1 })
+    const { value } = await sut.execute({ questionId: questionId.toString(), page: 1 })
 
-    expect(answers).toHaveLength(3)
+    expect(value?.answers).toHaveLength(3)
   })
 
   it('should not be able to fetch paginated recent questions', async () => {
@@ -35,8 +35,8 @@ describe('Fetch Question Answers', () => {
       new Array(22).fill(null).map(() => inMemoryAnswersRepository.create(makeAnswer({ questionId }))),
     ])
 
-    const { answers } = await sut.execute({ questionId: questionId.toString(), page: 2 })
+    const { value } = await sut.execute({ questionId: questionId.toString(), page: 2 })
 
-    expect(answers).toHaveLength(2)
+    expect(value?.answers).toHaveLength(2)
   })
 })

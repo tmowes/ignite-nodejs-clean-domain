@@ -3,6 +3,7 @@ import { Question } from '@domains/forum/enterprise/entities/question'
 import { QuestionsRepository } from '@domains/forum/application/repositories/questions-repository'
 import { QuestionAttachment } from '@domains/forum/enterprise/entities/question-attachment'
 import { QuestionAttachmentList } from '@domains/forum/enterprise/entities/question-attachment-list'
+import { right } from '@core/entities/either'
 
 import { CreateQuestionUseCaseRequest, CreateQuestionUseCaseResponse } from './types'
 
@@ -32,6 +33,6 @@ export class CreateQuestionUseCase {
 
     await this.questionsRepository.create(question)
 
-    return { question }
+    return right({ question })
   }
 }

@@ -3,6 +3,7 @@ import { Answer } from '@domains/forum/enterprise/entities/answer'
 import { AnswersRepository } from '@domains/forum/application/repositories/answers-repository'
 import { AnswerAttachment } from '@domains/forum/enterprise/entities/answer-attachment'
 import { AnswerAttachmentList } from '@domains/forum/enterprise/entities/answer-attachment-list'
+import { right } from '@core/entities/either'
 
 import { AnswerQuestionUseCaseRequest, AnswerQuestionUseCaseResponse } from './types'
 
@@ -31,6 +32,6 @@ export class AnswerQuestionUseCase {
 
     await this.answersRepository.create(updatedAnswer)
 
-    return { answer }
+    return right({ answer })
   }
 }

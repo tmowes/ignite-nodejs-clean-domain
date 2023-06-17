@@ -1,3 +1,4 @@
+import { Either } from '@core/entities/either'
 import { Question } from '@domains/forum/enterprise/entities/question'
 
 export type CreateQuestionUseCaseRequest = {
@@ -7,6 +8,9 @@ export type CreateQuestionUseCaseRequest = {
   attachmentsIds: string[]
 }
 
-export type CreateQuestionUseCaseResponse = {
-  question: Question
-}
+export type CreateQuestionUseCaseResponse = Either<
+  null,
+  {
+    question: Question
+  }
+>

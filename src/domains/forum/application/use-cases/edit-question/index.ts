@@ -2,9 +2,12 @@ import { QuestionsRepository } from '@domains/forum/application/repositories/que
 import { QuestionAttachmentList } from '@domains/forum/enterprise/entities/question-attachment-list'
 import { QuestionAttachment } from '@domains/forum/enterprise/entities/question-attachment'
 import { UniqueEntityID } from '@core/entities/unique-entity-id'
+import { left, right } from '@core/entities/either'
 
 import { QuestionAttachmentsRepository } from '../../repositories/question-attachments-repository'
 import { EditQuestionUseCaseRequest, EditQuestionUseCaseResponse } from './types'
+import { NotAllowedError } from '../errors/not-allowed'
+import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 
 export class EditQuestionUseCase {
   constructor(
@@ -22,11 +25,11 @@ export class EditQuestionUseCase {
     const question = await this.questionsRepository.findById(questionId)
 
     if (!question) {
-      throw new Error('Question not found')
+      return left(new ResourceNotFoundError())
     }
 
     if (authorId !== question.authorId.toString()) {
-      throw new Error('Not allowed')
+      return left(new NotAllowedError())
     }
 
     const currentQuestionAttachments = await this.questionAttachmentsRepository.findManyByQuestionId(
@@ -48,6 +51,6 @@ export class EditQuestionUseCase {
 
     await this.questionsRepository.save(updatedQuestion)
 
-    return { question: updatedQuestion }
+    return right({ question: updatedQuestion })
   }
 }

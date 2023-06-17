@@ -1,3 +1,4 @@
+import { Either } from '@core/entities/either'
 import { AnswerComment } from '@domains/forum/enterprise/entities/answer-comment'
 
 export type FetchCommentsOnAnswerUseCaseRequest = {
@@ -5,6 +6,9 @@ export type FetchCommentsOnAnswerUseCaseRequest = {
   page: number
 }
 
-export type FetchCommentsOnAnswerUseCaseResponse = {
-  answerComments: AnswerComment[]
-}
+export type FetchCommentsOnAnswerUseCaseResponse = Either<
+  null,
+  {
+    answerComments: AnswerComment[]
+  }
+>

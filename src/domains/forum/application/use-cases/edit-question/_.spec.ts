@@ -4,6 +4,8 @@ import { makeQuestion } from 'test/factories/make-question'
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 import { makeQuestionAttachment } from 'test/factories/make-question-attachments'
 
+import { NotAllowedError } from '../errors/not-allowed'
+
 import { EditQuestionUseCase } from '.'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
@@ -67,14 +69,15 @@ describe('Edit Question', () => {
 
     await inMemoryQuestionsRepository.create(newQuestion)
 
-    expect(() =>
-      sut.execute({
-        questionId: newQuestion.id.toValue(),
-        authorId: 'author-2',
-        title: 'Example question',
-        content: 'Example content',
-        attachmentsIds: [],
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      questionId: newQuestion.id.toValue(),
+      authorId: 'author-2',
+      title: 'Example question',
+      content: 'Example content',
+      attachmentsIds: [],
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

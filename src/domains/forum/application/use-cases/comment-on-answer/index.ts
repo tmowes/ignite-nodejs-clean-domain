@@ -2,8 +2,10 @@ import { UniqueEntityID } from '@core/entities/unique-entity-id'
 import { AnswersRepository } from '@domains/forum/application/repositories/answers-repository'
 import { AnswerCommentsRepository } from '@domains/forum/application/repositories/answer-comments-repository'
 import { AnswerComment } from '@domains/forum/enterprise/entities/answer-comment'
+import { left, right } from '@core/entities/either'
 
 import { CommentOnAnswerUseCaseRequest, CommentOnAnswerUseCaseResponse } from './types'
+import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 
 export class CommentOnAnswerUseCase {
   constructor(
@@ -19,7 +21,7 @@ export class CommentOnAnswerUseCase {
     const answer = await this.answersRepository.findById(answerId)
 
     if (!answer) {
-      throw new Error('Answer not found')
+      return left(new ResourceNotFoundError())
     }
 
     const answerComment = AnswerComment.create({
@@ -30,6 +32,6 @@ export class CommentOnAnswerUseCase {
 
     await this.answerCommentsRepository.create(answerComment)
 
-    return { answerComment }
+    return right({ answerComment })
   }
 }

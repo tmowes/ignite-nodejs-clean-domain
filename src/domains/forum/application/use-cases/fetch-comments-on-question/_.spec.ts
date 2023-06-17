@@ -22,9 +22,9 @@ describe('Fetch Comments On Question', () => {
       inMemoryQuestionCommentsRepository.create(makeQuestionComment({ questionId })),
     ])
 
-    const { questionComments } = await sut.execute({ questionId: questionId.toString(), page: 1 })
+    const { value } = await sut.execute({ questionId: questionId.toString(), page: 1 })
 
-    expect(questionComments).toHaveLength(3)
+    expect(value?.questionComments).toHaveLength(3)
   })
 
   it('should not be able to delete a comment on question from another user', async () => {
@@ -34,8 +34,8 @@ describe('Fetch Comments On Question', () => {
         .map(() => inMemoryQuestionCommentsRepository.create(makeQuestionComment({ questionId }))),
     ])
 
-    const { questionComments } = await sut.execute({ questionId: questionId.toString(), page: 2 })
+    const { value } = await sut.execute({ questionId: questionId.toString(), page: 2 })
 
-    expect(questionComments).toHaveLength(2)
+    expect(value?.questionComments).toHaveLength(2)
   })
 })

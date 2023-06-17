@@ -1,4 +1,5 @@
 import { QuestionCommentsRepository } from '@domains/forum/application/repositories/question-comments-repository'
+import { right } from '@core/entities/either'
 
 import { FetchCommentsOnQuestionUseCaseRequest, FetchCommentsOnQuestionUseCaseResponse } from './types'
 
@@ -13,6 +14,6 @@ export class FetchCommentsOnQuestionUseCase {
       page,
     })
 
-    return { questionComments }
+    return right({ questionComments })
   }
 }

@@ -1,4 +1,5 @@
 import { AnswerCommentsRepository } from '@domains/forum/application/repositories/answer-comments-repository'
+import { right } from '@core/entities/either'
 
 import { FetchCommentsOnAnswerUseCaseRequest, FetchCommentsOnAnswerUseCaseResponse } from './types'
 
@@ -13,6 +14,6 @@ export class FetchCommentsOnAnswerUseCase {
       page,
     })
 
-    return { answerComments }
+    return right({ answerComments })
   }
 }
