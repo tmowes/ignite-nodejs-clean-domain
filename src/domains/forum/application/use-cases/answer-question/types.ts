@@ -4,6 +4,7 @@ export type AnswerQuestionUseCaseRequest = {
   instructorId: string
   questionId: string
   content: string
+  attachmentsIds: string[]
 }
 
 export type AnswerQuestionUseCaseResponse = {

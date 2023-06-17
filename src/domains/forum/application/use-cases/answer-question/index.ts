@@ -1,6 +1,8 @@
 import { UniqueEntityID } from '@core/entities/unique-entity-id'
 import { Answer } from '@domains/forum/enterprise/entities/answer'
 import { AnswersRepository } from '@domains/forum/application/repositories/answers-repository'
+import { AnswerAttachment } from '@domains/forum/enterprise/entities/answer-attachment'
+import { AnswerAttachmentList } from '@domains/forum/enterprise/entities/answer-attachment-list'
 
 import { AnswerQuestionUseCaseRequest, AnswerQuestionUseCaseResponse } from './types'
 
@@ -11,6 +13,7 @@ export class AnswerQuestionUseCase {
     instructorId,
     questionId,
     content,
+    attachmentsIds,
   }: AnswerQuestionUseCaseRequest): Promise<AnswerQuestionUseCaseResponse> {
     const answer = Answer.create({
       content,
@@ -18,7 +21,15 @@ export class AnswerQuestionUseCase {
       questionId: new UniqueEntityID(questionId),
     })
 
-    await this.answersRepository.create(answer)
+    const answerAttachments = attachmentsIds.map((attachmentId) =>
+      AnswerAttachment.create({ attachmentId: new UniqueEntityID(attachmentId), answerId: answer.id }),
+    )
+
+    const attachments = new AnswerAttachmentList(answerAttachments)
+
+    const updatedAnswer = Object.assign(answer, { attachments })
+
+    await this.answersRepository.create(updatedAnswer)
 
     return { answer }
   }

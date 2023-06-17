@@ -4,6 +4,7 @@ export type EditAnswerUseCaseRequest = {
   answerId: string
   authorId: string
   content: string
+  attachmentsIds: string[]
 }
 
 export type EditAnswerUseCaseResponse = {
