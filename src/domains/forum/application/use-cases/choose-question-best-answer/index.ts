@@ -1,13 +1,13 @@
 import { AnswersRepository } from '@domains/forum/application/repositories/answers-repository'
 import { QuestionsRepository } from '@domains/forum/application/repositories/questions-repository'
 import { left, right } from '@core/entities/either'
+import { ResourceNotFoundError } from '@core/errors/resource-not-found'
+import { NotAllowedError } from '@core/errors/not-allowed'
 
 import {
   ChooseQuestionBestAnswerUseCaseRequest,
   ChooseQuestionBestAnswerUseCaseResponse,
 } from './types'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
-import { NotAllowedError } from '../errors/not-allowed'
 
 export class ChooseQuestionBestAnswerUseCase {
   constructor(

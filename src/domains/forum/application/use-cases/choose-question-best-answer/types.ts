@@ -1,8 +1,7 @@
 import { Question } from '@domains/forum/enterprise/entities/question'
 import { Either } from '@core/entities/either'
-
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
-import { NotAllowedError } from '../errors/not-allowed'
+import { ResourceNotFoundError } from '@core/errors/resource-not-found'
+import { NotAllowedError } from '@core/errors/not-allowed'
 
 export type ChooseQuestionBestAnswerUseCaseRequest = {
   authorId: string

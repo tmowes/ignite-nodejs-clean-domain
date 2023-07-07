@@ -1,9 +1,9 @@
 import { QuestionCommentsRepository } from '@domains/forum/application/repositories/question-comments-repository'
 import { left, right } from '@core/entities/either'
+import { NotAllowedError } from '@core/errors/not-allowed'
+import { ResourceNotFoundError } from '@core/errors/resource-not-found'
 
 import { DeleteCommentOnQuestionUseCaseRequest, DeleteCommentOnQuestionUseCaseResponse } from './types'
-import { NotAllowedError } from '../errors/not-allowed'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 
 export class DeleteCommentOnQuestionUseCase {
   constructor(private questionCommentsRepository: QuestionCommentsRepository) {}

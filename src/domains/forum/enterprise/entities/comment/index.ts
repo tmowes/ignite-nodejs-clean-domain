@@ -1,8 +1,8 @@
-import { Entity } from '@core/entities/entity'
+import { AggregateRoot } from '@core/entities/aggregate-root'
 
 import { CommentProps } from './types'
 
-export abstract class Comment<Props extends CommentProps> extends Entity<Props> {
+export abstract class Comment<Props extends CommentProps> extends AggregateRoot<Props> {
   get authorId() {
     return this.props.authorId
   }
@@ -14,6 +14,10 @@ export abstract class Comment<Props extends CommentProps> extends Entity<Props> 
   set content(content: string) {
     this.props.content = content
     this.touch()
+  }
+
+  get excerpt() {
+    return this.content.substring(0, 120).trimEnd().concat('...')
   }
 
   get createdAt() {

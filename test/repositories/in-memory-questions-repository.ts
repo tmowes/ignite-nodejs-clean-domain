@@ -2,6 +2,7 @@ import { Question } from '@domains/forum/enterprise/entities/question'
 import { QuestionsRepository } from '@domains/forum/application/repositories/questions-repository'
 import { PaginationParams } from '@core/repositories/pagination-params'
 import { QuestionAttachmentsRepository } from '@domains/forum/application/repositories/question-attachments-repository'
+import { DomainEvents } from '@core/events/domain-events'
 
 export class InMemoryQuestionsRepository implements QuestionsRepository {
   public items: Question[] = []
@@ -10,11 +11,13 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
   async create(question: Question) {
     this.items.push(question)
+    DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   async save(question: Question): Promise<void> {
     const index = this.items.findIndex((item) => item.id === question.id)
     this.items[index] = question
+    DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   async delete(question: Question): Promise<void> {

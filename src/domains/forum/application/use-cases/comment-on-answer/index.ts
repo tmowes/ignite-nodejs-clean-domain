@@ -3,9 +3,9 @@ import { AnswersRepository } from '@domains/forum/application/repositories/answe
 import { AnswerCommentsRepository } from '@domains/forum/application/repositories/answer-comments-repository'
 import { AnswerComment } from '@domains/forum/enterprise/entities/answer-comment'
 import { left, right } from '@core/entities/either'
+import { ResourceNotFoundError } from '@core/errors/resource-not-found'
 
 import { CommentOnAnswerUseCaseRequest, CommentOnAnswerUseCaseResponse } from './types'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 
 export class CommentOnAnswerUseCase {
   constructor(

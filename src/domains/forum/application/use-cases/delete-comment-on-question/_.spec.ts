@@ -1,8 +1,7 @@
 import { InMemoryQuestionCommentsRepository } from 'test/repositories/in-memory-question-comments-repository'
 import { UniqueEntityID } from '@core/entities/unique-entity-id'
 import { makeQuestionComment } from 'test/factories/make-question-comment'
-
-import { NotAllowedError } from '../errors/not-allowed'
+import { NotAllowedError } from '@core/errors/not-allowed'
 
 import { DeleteCommentOnQuestionUseCase } from '.'
 

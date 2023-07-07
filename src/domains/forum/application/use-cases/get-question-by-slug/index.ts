@@ -1,8 +1,8 @@
 import { QuestionsRepository } from '@domains/forum/application/repositories/questions-repository'
 import { left, right } from '@core/entities/either'
+import { ResourceNotFoundError } from '@core/errors/resource-not-found'
 
 import { GetQuestionBySlugUseCaseRequest, GetQuestionBySlugUseCaseResponse } from './types'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 
 export class GetQuestionBySlugUseCase {
   constructor(private questionsRepository: QuestionsRepository) {}

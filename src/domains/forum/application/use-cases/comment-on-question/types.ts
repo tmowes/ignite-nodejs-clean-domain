@@ -1,7 +1,6 @@
 import { Either } from '@core/entities/either'
 import { QuestionComment } from '@domains/forum/enterprise/entities/question-comment'
-
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@core/errors/resource-not-found'
 
 export type CommentOnQuestionUseCaseRequest = {
   questionId: string

@@ -1,7 +1,6 @@
 import { Either } from '@core/entities/either'
-
-import { NotAllowedError } from '../errors/not-allowed'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
+import { NotAllowedError } from '@core/errors/not-allowed'
+import { ResourceNotFoundError } from '@core/errors/resource-not-found'
 
 export type DeleteCommentOnQuestionUseCaseRequest = {
   questionCommentId: string

@@ -3,8 +3,7 @@ import { makeQuestion } from 'test/factories/make-question'
 import { UniqueEntityID } from '@core/entities/unique-entity-id'
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 import { makeQuestionAttachment } from 'test/factories/make-question-attachments'
-
-import { NotAllowedError } from '../errors/not-allowed'
+import { NotAllowedError } from '@core/errors/not-allowed'
 
 import { DeleteQuestionUseCase } from '.'
 

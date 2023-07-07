@@ -1,3 +1,4 @@
+import { DomainEvents } from '@core/events/domain-events'
 import { PaginationParams } from '@core/repositories/pagination-params'
 import { AnswerCommentsRepository } from '@domains/forum/application/repositories/answer-comments-repository'
 import { AnswerComment } from '@domains/forum/enterprise/entities/answer-comment'
@@ -7,6 +8,7 @@ export class InMemoryAnswerCommentsRepository implements AnswerCommentsRepositor
 
   async create(answerComment: AnswerComment) {
     this.items.push(answerComment)
+    DomainEvents.dispatchEventsForAggregate(answerComment.id)
   }
 
   async delete(answerComment: AnswerComment): Promise<void> {

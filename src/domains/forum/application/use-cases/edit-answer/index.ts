@@ -4,10 +4,10 @@ import { AnswerAttachmentList } from '@domains/forum/enterprise/entities/answer-
 import { AnswerAttachment } from '@domains/forum/enterprise/entities/answer-attachment'
 import { UniqueEntityID } from '@core/entities/unique-entity-id'
 import { left, right } from '@core/entities/either'
+import { NotAllowedError } from '@core/errors/not-allowed'
+import { ResourceNotFoundError } from '@core/errors/resource-not-found'
 
 import { EditAnswerUseCaseRequest, EditAnswerUseCaseResponse } from './types'
-import { NotAllowedError } from '../errors/not-allowed'
-import { ResourceNotFoundError } from '../errors/resource-not-found-error'
 
 export class EditAnswerUseCase {
   constructor(
